@@ -1,17 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+// import { CssBaseline } from "@material-ui/core";
+// import { ThemeProvider } from "@material-ui/core/styles";
+// import theme from "./theme";
+import { Neo4jProvider, createDriver } from "use-neo4j";
+
+const driver = createDriver(
+  process.env.REACT_APP_NEO4J_DB,
+  process.env.REACT_APP_NEO4J_URL,
+  process.env.REACT_APP_NEO4J_PORT,
+  process.env.REACT_APP_NEO4J_USERNAME,
+  process.env.REACT_APP_NEO4J_PASSWORD
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Neo4jProvider driver={driver}>
+      <App driver={driver} />
+    </Neo4jProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
